@@ -6,5 +6,13 @@
 {% block content %}
 
 <h4>This is your shopping cart</h4>
+
+{% for item in cart_items%}
+
+<p><img class="image_size" src="{{ MEDIA_URL }}{{ item.product.image }}"/></p>
+<p>{{item.product.name}}</p>
+<p>{{item.quantity}}</p>
+
+{% endfor %}
       
 {% endblock content %} 
