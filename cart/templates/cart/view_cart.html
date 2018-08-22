@@ -1,18 +1,42 @@
 {% extends "base.html" %}
-
-
-
-
 {% block content %}
-
-<h4>This is your shopping cart</h4>
-
-{% for item in cart_items%}
-
-<p><img class="image_size" src="{{ MEDIA_URL }}{{ item.product.image }}"/></p>
-<p>{{item.product.name}}</p>
-<p>{{item.quantity}}</p>
-
-{% endfor %}
-      
-{% endblock content %} 
+<h1>Cart</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>    
+            <th>Product</th>    
+            <th>Quantity</th>    
+            <th>Price</th>
+            <th>Total</th> 
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart_items %}
+        <tr>
+            <td><img width="150" height="75" src="{{MEDIA_URL}}{{item.product.image}}"/></td>    
+            <td>{{ item.product.name }}</td>    
+            <td>{{ item.quantity}}</td>    
+            <td>€{{ item.product.price }}</td>
+            <td>€{{ item.item_total}}</td>
+            <td><form method="post" action="{% url 'remove_item' %}">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-success" value="Remove"/>
+                <input type="hidden" name="id" value="{{item.product.id}}"/>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><strong>Total:</strong></td>
+            <td><strong>€{{grand_total}}</strong></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+<a href="{%  url 'view_checkout' %}" class="btn btn-success" role="button">Checkout</a>
+{% endblock content %}
