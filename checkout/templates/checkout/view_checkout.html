@@ -1,7 +1,9 @@
 {% extends "base.html" %}
-
+{% load bootstrap_tags%}
 {% block content %}
-<h1>Cart</h1>
+
+
+<h4> this is the checkout page</h4>
 
 <table class="table">
     <thead>
@@ -40,5 +42,16 @@
         </tr>
     </tbody>
 </table>
-<a href="{%  url 'view_checkout' %}" class="btn btn-success" role="button">Checkout</a>
+
+<form method="POST">
+    {% csrf_token%}
+    
+    {{ form | as_bootstrap }}
+    
+    <input type="submit" value="Confirm"/>
+    
+</form>
+
+
+
 {% endblock content %}
